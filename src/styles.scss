@@ -1,3 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "~maplibre-gl/dist/maplibre-gl.css"
+@import "~maplibre-gl/dist/maplibre-gl.css";
+
+/* Importing Bootstrap SCSS file. */
+@import "bootstrap/scss/bootstrap";
