@@ -1,3 +1,3 @@
 export const environment = {
-    maptilerKey: "3Z2GXbFM8tUl3xqZB2As"
+    maptilerKey: "2ht6ocXXSLXRF6OXbgJB"
 };
