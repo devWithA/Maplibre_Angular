@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 import { Basemap } from 'src/app/models/basemap';
 import { basemapList } from 'src/app/utilities/mapCommon';
 import { MapService } from '../services/mapService/map.service';
+import * as turf from '@turf/turf'
+import { DrawCreateEvent } from '@mapbox/mapbox-gl-draw';
 
 @Component({
   selector: 'app-map',
@@ -35,6 +37,11 @@ export class MapComponent {
 
     this.mapService.addPitchToggleControl(this.map);
 
+    this.mapService.addDrawControl(this.map);
+
+    this.map.on('draw.create', this.handleDraw);
+    this.map.on('draw.update', this.handleDraw);
+
   }
 
   handleBasemapChange(basemap: Basemap, i: number) {
@@ -44,6 +51,27 @@ export class MapComponent {
 
     this.map.setStyle(basemap.url);
     this.selectedBasemapIndex = i;
+
+  }
+
+  handleDraw(e: DrawCreateEvent) {
+    let drawFeature = e.features[0];
+
+    switch (drawFeature.geometry.type) {
+      case "Polygon":
+        const area = turf.area(drawFeature);
+        alert("Area : " + area.toFixed(2) + " m. sq.")
+        break;
+      case "LineString":
+        const length = turf.length(drawFeature);
+        alert("Length : " + length.toFixed(2) + " km")
+        break;
+      case "Point":
+        // console.log("Point");
+        break;
+      default:
+        break;
+    }
 
   }
 
